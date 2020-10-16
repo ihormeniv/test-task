@@ -21,7 +21,6 @@ print(
 '''Write decorator that measures function execution
 time and print it to output console.'''
 
-
 def timer(func):
     def wrapper():
         start = time.time()
@@ -47,14 +46,13 @@ Micro lib should contain the next funcitonality'''
 num = random.random()
 num = '%.2f' % num
 name_list = ['Andrii', 'German', 'Taras', 'Ihor', 'Oles', 'Ira']
-
 index = random.randint(0, 5)
 index_name = name_list[index]
-aut1 = MicroLibrary(f'{index_name}', f'{num}')
-
+aut1 = MicroLibrary(f'{index_name}', f'{num}')S
 aut1.add_note()
 aut1.read_from_file()
 aut1.dell_from_file()
 aut1.highest_rating()
 aut1.lower_rating()
 aut1.average_rating()
+https://github.com/Ihor-Meniv/test-taskhttps://github.com/Ihor-Meniv/test-task
