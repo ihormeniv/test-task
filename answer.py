@@ -31,11 +31,9 @@ def timer(func):
 
     return wrapper
 
-
 @timer
 def sleep_function():
     time.sleep(3)
-
 
 print(sleep_function())
 
@@ -46,11 +44,10 @@ Note should contain author_name, note,
 rating (rating - is 0 - 1 rating of the author)
 Micro lib should contain the next funcitonality'''
 
-
 num = random.random()
 num = '%.2f' % num
 name_list = ['Andrii', 'German', 'Taras', 'Ihor', 'Oles', 'Ira']
-# used random for give the same users create the different note with different rating
+
 index = random.randint(0, 5)
 index_name = name_list[index]
 aut1 = MicroLibrary(f'{index_name}', f'{num}')
