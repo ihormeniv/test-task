@@ -1,0 +1,371 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "description" : "Topic & Keywords",
+    "version" : "1.0.0",
+    "title" : "topics-service",
+    "contact" : {
+      "name" : "Andrii",
+      "email" : "grudentomash@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "create topic secured Admin-only calls"
+  }, {
+    "name" : "users",
+    "description" : "Operations available to regular users"
+  } ],
+  "servers" : [ {
+    "description" : "topic url Blawesome.app",
+    "url" : "http://dev.blsmsys.com/api/v1/topics-service/"
+  } ],
+  "paths" : {
+    "/topics" : {
+      "post" : {
+        "tags" : [ "admins" ],
+        "summary" : "create topic",
+        "operationId" : "createTopic",
+        "description" : "create topic",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/TopicCreateBody"
+        },
+        "responses" : {
+          "201" : {
+            "description" : "topic created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/BlawesomeResponse"
+                  }, {
+                    "type" : "object",
+                    "properties" : {
+                      "data" : {
+                        "$ref" : "#/components/schemas/Topic"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "badrequests"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "all topics",
+        "operationId" : "listOfTopics",
+        "description" : "all topics",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "with_activity",
+          "in" : "query",
+          "description" : "get all topics with activity True",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "list of topics",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/BlawesomeResponse"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Topic"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/topics/<string:topic>" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "topic by topic name",
+        "operationId" : "topicByName",
+        "description" : "topic ny name",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "topic by topic_name",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/BlawesomeResponse"
+                  }, {
+                    "type" : "object",
+                    "properties" : {
+                      "data" : {
+                        "$ref" : "#/components/schemas/Topic"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "not found"
+          }
+        }
+      },
+      "head" : {
+        "tags" : [ "users" ],
+        "summary" : "head topic",
+        "operationId" : "headTopic",
+        "description" : "head topic",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "topic with acticity"
+          },
+          "400" : {
+            "description" : "topic without activity"
+          },
+          "404" : {
+            "description" : "topic not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "users" ],
+        "summary" : "delete topic",
+        "operationId" : "deleteTopic",
+        "description" : "delete topic",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "topic was deleted"
+          },
+          "400" : {
+            "description" : "topic doesn't exist"
+          }
+        }
+      }
+    },
+    "/keywords" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "create keyword",
+        "operationId" : "createKeyword",
+        "description" : "create keyword",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/KeywordCreateBody"
+        },
+        "responses" : {
+          "201" : {
+            "description" : "keyword was created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/BlawesomeResponse"
+                  }, {
+                    "type" : "object",
+                    "properties" : {
+                      "data" : {
+                        "$ref" : "#/components/schemas/Keyword"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad requests"
+          }
+        }
+      }
+    },
+    "/keywords/<string:keyword>" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "get keyword by keyword name",
+        "operationId" : "getKeywordByName",
+        "description" : "get keyword by name",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "keyword exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/BlawesomeResponse"
+                  }, {
+                    "type" : "object",
+                    "properties" : {
+                      "data" : {
+                        "$ref" : "#/components/schemas/Keyword"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "users" ],
+        "summary" : "delete keyword",
+        "operationId" : "deleteKeyword",
+        "description" : "delete keyword",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "keyword was deleted"
+          },
+          "404" : {
+            "description" : "not fount keyword"
+          }
+        }
+      }
+    }
+  },
+  "security" : [ {
+    "bearerAuth" : [ ]
+  } ],
+  "components" : {
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    },
+    "requestBodies" : {
+      "TopicCreateBody" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "topic" : {
+                  "type" : "string",
+                  "format" : "string",
+                  "example" : "topic"
+                }
+              }
+            }
+          }
+        }
+      },
+      "KeywordCreateBody" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "keyword" : {
+                  "type" : "string",
+                  "format" : "string",
+                  "example" : "keyword"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas" : {
+      "BlawesomeResponse" : {
+        "type" : "object",
+        "required" : [ "meta", "data" ],
+        "properties" : {
+          "meta" : {
+            "required" : [ "code" ],
+            "properties" : {
+              "code" : {
+                "type" : "integer",
+                "format" : "integer",
+                "example" : "200"
+              }
+            }
+          },
+          "data" : {
+            "oneOf" : [ {
+              "type" : "object"
+            }, {
+              "type" : "array"
+            } ]
+          }
+        }
+      },
+      "Topic" : {
+        "type" : "object",
+        "required" : [ "id", "topic" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "topic" : {
+            "type" : "string",
+            "example" : "topic"
+          }
+        }
+      },
+      "Keyword" : {
+        "type" : "object",
+        "required" : [ "id", "keyword" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "keyword" : {
+            "type" : "string",
+            "example" : "keyword"
+          }
+        }
+      }
+    }
+  }
+}
